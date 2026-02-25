@@ -6,7 +6,7 @@ dotenv.config();
 const connectToDb = () => {
   mongoose
     .connect(
-      process.env.MONGODB_URI,
+      "mongodb+srv://roshanjha20041118_db_user:qd7SDU6ndELchrK3@cluster0.g8fvhrw.mongodb.net/cohort",
     )
     .then(() => {
       console.log("Connected to MongoDB");
