@@ -1,12 +1,12 @@
 const express = require("express");
 const connectToDb = require("./src/db/db");
-const noteModel = require("./src/models/notes.model");
+const noteModel = require("./src/models/notes.model"); //importing note model
 
 const app = express();
 app.use(express.json());
 
-app.get("/notes", async (req, res) => {
-  const data = await noteModel.find();
+app.get("/notes", async (req, res) => { //fetching all notes from database
+  const data = await noteModel.find(); 
   res.json({
     message: "Notes fetched successfully",
     data,
@@ -51,3 +51,6 @@ connectToDb();
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
+
+
+
