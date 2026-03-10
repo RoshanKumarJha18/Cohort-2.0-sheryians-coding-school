@@ -4,9 +4,11 @@ const {registerController,loginController} = require('../controllers/auth.contro
 
 /*
     POST /auth/register
+    POST /auth/login
 */
 router.post('/register', registerController)
 router.post('/login', loginController)
+
 
 
 
