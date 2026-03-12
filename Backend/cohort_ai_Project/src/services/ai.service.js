@@ -9,7 +9,6 @@ const generateCaption = async (base64ImageFile) => {
       inlineData: {
         mimeType: "image/jpeg",
         data: base64ImageFile,
-        
       },
     },
     { text: "Caption this image." },
@@ -18,13 +17,14 @@ const generateCaption = async (base64ImageFile) => {
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
     contents: contents,
-      config: {
-          systemInstruction: `
+    config: {
+      systemInstruction: `
       You are an expert in genrating captions for the image.
       You genrate single caption for the image.
       Your caption should be short and concise.
       You use hastags and emojics in the caption.
-      `},
+      `,
+    },
   });
   return response.text;
 };

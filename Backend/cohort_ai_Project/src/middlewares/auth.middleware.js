@@ -8,18 +8,18 @@ const authenticateUser = async (req, res, next) => {
       message: "Unauthorized access please Login First",
     });
   }
-  try{
+  try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await authModel.findOne({
-        _id: decoded.userId,
-    })
+      _id: decoded.userId,
+    });
     req.user = user;
     next();
-  }catch(err){
+  } catch (err) {
     return res.status(401).json({
-        message: "Invalid token, please login again",
-    })
+      message: "Invalid token, please login again",
+    });
   }
-}
+};
 
 module.exports = authenticateUser;

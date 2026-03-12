@@ -6,9 +6,11 @@ const multer = require("multer");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/", 
-    authenticateUser, /* req.user = authenticated user */
-    upload.single("image"), 
-    postController);
+router.post(
+  "/",
+  authenticateUser /*middleware -> used to verify whether user is login or not [protected route] */,
+  upload.single("image"),
+  postController,
+);
 
 module.exports = router;
