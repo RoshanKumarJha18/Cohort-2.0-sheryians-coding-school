@@ -2,10 +2,10 @@ const { GoogleGenAI } = require("@google/genai");
 
 const ai = new GoogleGenAI({});
  
-const generateContent = async (data)=>{
+const generateContent = async (chatHistory)=>{
     const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
-    contents:data,
+    contents:chatHistory,
   });
   return response.text;
 }
