@@ -19,7 +19,7 @@ io.on("connection", (socket) => {
   });
   socket.on("message", async (data) => {
     console.log("message recieved ", data.prompt);
-    chatHistory.push({ //this is saving question in the history
+    chatHistory.push({ //this is saving question in the history low level memory storage
       role: "user",
       parts: [{ text: data.prompt }],
     });
