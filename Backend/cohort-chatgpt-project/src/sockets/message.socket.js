@@ -42,10 +42,10 @@ const initSocketServer = (httpServer) => {
           const vectors = await aiservice.generateVector(messagePayload.content)
           const memory = await queryMemory({
             queryVector:vectors,
-            limit:1,
+            limit:3,
             metadata:{
                 user:socket.user._id,
-                chat:messagePayload.chat
+                
             }
           })
           await createMemory({
@@ -59,15 +59,32 @@ const initSocketServer = (httpServer) => {
           })
 
           
-          console.log(memory)
+        
             const chatHistory = await messageModel.find({chat:messagePayload.chat})
-            
-            const response = await aiservice.generateResponse(chatHistory.map(item=>{
+            const stm = chatHistory.map(item=>{
                 return {
                     role:item.role,
                     parts:[{text:item.content}]
                 }
-            }))
+            })
+
+            const ltm = memory.map(item=>{
+                return{
+                    role:"user",
+                    parts:[{text:`
+                            these are the previous messages from the chat, use them to genrate response
+                            ${memory.map(i=>i.metadata.content).join("\n")}
+                        
+                        `
+
+                    }]
+                }
+            })
+
+            console.log(ltm[0])
+            console.log(stm)
+
+            const response = await aiservice.generateResponse([...ltm,...stm])
            const aiResult = await messageModel.create({
                 user:socket.user._id,
                 chat:messagePayload.chat,
