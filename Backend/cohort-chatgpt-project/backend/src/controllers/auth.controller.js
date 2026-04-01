@@ -38,10 +38,18 @@ const registerController = async (req,res)=>{
 }
 
 const loginController = async (req,res)=>{
-    const {email,password} = req.body;
+    const { username, email, password } = req.body;
+    if (!password || (!email && !username)) {
+        return res.status(400).json({ message: 'Username/email and password are required' });
+    }
+
     const user = await userModel.findOne({
-        email
-    })
+        $or: [
+            { email: email || null },
+            { username: username || null }
+        ]
+    });
+
     if(!user){
         return res.status(404).json({
             message:"user not found"
@@ -49,20 +57,19 @@ const loginController = async (req,res)=>{
     }
     const isPasswordValid = await bcrypt.compare(password,user.password);
     if(!isPasswordValid){
-        return res.status(404).json({
+        return res.status(401).json({
             message:"invalid password"
         })
     }
     const token = jwt.sign({userid:user._id},process.env.JWT_SECRET,{expiresIn:'1d'});
     res.cookie('token',token);
 
-    res.status(201).json({
+    res.status(200).json({
         message:"user logged in successfully",
         user:{
-            email:user.email,
             _id:user._id,
-            fullName:user.fullName
-
+            username:user.username,
+            email:user.email
         },
         token
     })
