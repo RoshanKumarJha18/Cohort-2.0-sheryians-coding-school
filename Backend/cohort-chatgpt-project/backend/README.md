@@ -172,7 +172,7 @@ npm install
 # 3. Create .env file
 cat > .env << EOF
 # Database
-MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/cohort-chat
+MONGODB_URI=your-mongodb-key
 
 # Vector DB
 PINECONE_API_KEY=your-pinecone-key
