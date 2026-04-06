@@ -43,3 +43,5 @@ npm run dev
 - `@langchain/core`: Core LangChain functionality
 - `@langchain/google-genai`: Google Generative AI integration
 - `dotenv`: Environment variable management
+
+npm i @langchain/community --legacy-peer-deps 
